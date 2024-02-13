@@ -22,7 +22,7 @@ class Model:
         self.tab3 = self.Tab3(self)
         self.tab4 = self.Tab4(self)
         self.tab5 = self.Tab5(self)
-        self.tab7 = self.Tab6(self)
+        self.tab6 = self.Tab6(self)
 
     def sanitize_filename(self, filename):
 

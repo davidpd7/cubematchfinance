@@ -23,7 +23,7 @@ class Controller:
         self.__connection_third_tab()
         self.__connection_fourth_tab()
         self.__connection_fifth_tab()
-        self.__connection_seventh_tab()
+        self.__connection_sixht_tab()
     
     def __connection_first_tab(self):
 
@@ -147,7 +147,7 @@ class Controller:
                     item = QTableWidgetItem(str(data.iat[row, col]))
                     table.setItem(row, col, item)
 
-    def __connection_seventh_tab(self):
+    def __connection_sixht_tab(self):
 
         tab_path = self.__pushbuttons["SeventhTabApp"]
         browse_button = tab_path["Browse Database"]
