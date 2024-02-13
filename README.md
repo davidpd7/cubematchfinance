@@ -10,8 +10,6 @@ The CubeMatch Finance App is a tool designed to help you efficiently manage time
 1. Clone the repository to your local machine.
 2. Install the required dependencies using `pip` by running:
 
-  -  pipenv shell
-  -  pipenv sync
   -  pip install cubematchfinance
 
 Launch the app by running:
