@@ -22,7 +22,7 @@ class Model:
         self.tab3 = self.Tab3(self)
         self.tab4 = self.Tab4(self)
         self.tab5 = self.Tab5(self)
-        self.tab7 = self.Tab7(self)
+        self.tab7 = self.Tab6(self)
 
     def sanitize_filename(self, filename):
 
@@ -143,7 +143,7 @@ class Model:
                             self.parent.rename(old_path, new_path)
             except Exception as e:
                 error_message = f"An error occurred while renaming files:\n{str(e)}"
-                QMessageBox.critical(None, "Error", error_message)
+                print(error_message)
                 
         def __set_name_sales_invoices(self, page):
 
@@ -157,7 +157,7 @@ class Model:
                 return new_name
             except Exception as e:
                 error_message = f"An error occurred while extracting info: {str(e)}"
-                QMessageBox.critical(None, "Error", error_message)
+                print(error_message)
                             
     class Tab3:
 
@@ -230,7 +230,7 @@ class Model:
 
                 except Exception as e:
                     error_message = f"An error occurred while renaming: {str(e)}"
-                    QMessageBox.critical(None, "Error", error_message)
+                    print(error_message)
 
         def __converter(self):
             
@@ -299,7 +299,7 @@ class Model:
                         self.__renaming(file, old_path)
                     except Exception as e:
                         error_message = f"An error occurred while renaming: {str(e)}"
-                        QMessageBox.critical(None, "Error", error_message)
+                        print(error_message)
 
     class Tab4:
 
@@ -416,7 +416,7 @@ class Model:
                 QMessageBox.critical(None, "Error", error_message)
         
     
-    class Tab7:
+    class Tab6:
 
         def __init__(self, parent):
 
@@ -509,14 +509,14 @@ class Model:
             except Exception as e:
                     print(f"Error reading Excel file: {e}")
         
-        def associates_view(self, source = str ):
+        def associates_view(self, source:str ):
             try:
                 self.__open_database()
                 return self.associates
             except:
                 pass
         
-        def assignments_view(self, source = str):
+        def assignments_view(self, source: str):
             try:
                 self.__open_database()
                 return self.assignments

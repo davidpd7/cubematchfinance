@@ -158,20 +158,20 @@ class Controller:
         associates_button = tab_path["Consultants"]
         assignments_button = tab_path['Assignments']
         export_view_button = tab_path["Export View"]
-        browse_button.clicked.connect(self.__model.tab7.browse_database)
-        export_clarity_button.clicked.connect(self.__model.tab7.export_sales_list)
-        clarity_reminder_button.clicked.connect(self.__model.tab7.clarity_reminder)
-        browse_sales_list_button.clicked.connect(self.__model.tab7.browse_sales_list)
-        reminder_button.clicked.connect(self.__model.tab7.reminder)
+        browse_button.clicked.connect(self.__model.tab6.browse_database)
+        export_clarity_button.clicked.connect(self.__model.tab6.export_sales_list)
+        clarity_reminder_button.clicked.connect(self.__model.tab6.clarity_reminder)
+        browse_sales_list_button.clicked.connect(self.__model.tab6.browse_sales_list)
+        reminder_button.clicked.connect(self.__model.tab6.reminder)
         associates_button.clicked.connect(functools.partial(self.__get_dataframe_from_seventh_tab, source="associates"))
         assignments_button.clicked.connect(functools.partial(self.__get_dataframe_from_seventh_tab, source="assignments"))
         export_view_button.clicked.connect(self.__export_view)
 
     def __get_dataframe_from_seventh_tab(self, source):
         if source == "associates":
-            self.current_data = self.__model.tab7.associates_view()
+            self.current_data = self.__model.tab6.associates_view()
         elif source == "assignments":
-            self.current_data = self.__model.tab7.assignments_view()
+            self.current_data = self.__model.tab6.assignments_view()
         else:
             self.current_data = None
 
