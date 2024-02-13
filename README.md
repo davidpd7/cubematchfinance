@@ -21,7 +21,7 @@ python cubematchfinance
 Launch the app.
 
 Feedback and Support
-If you encounter any issues or have suggestions for improvements, please feel free to contact us at davidpd997@gmail.com. Your feedback is valuable to me, and I am here to provide support if you need it.
+If you encounter any issues or have suggestions for improvements, please feel free to contact us at david.5607.9@gmail.com. Your feedback is valuable to me, and I am here to provide support if you need it.
 
 License
 This project is licensed under the MIT License - see the LICENSE file for details.
