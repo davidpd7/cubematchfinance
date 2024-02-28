@@ -436,7 +436,6 @@ class Model:
             try:
                 self.database = self.fileName[0]
                 self.assignments = pd.read_excel(self.database, sheet_name='Assigments')
-                self.sales = pd.read_excel(self.database , sheet_name='Sales')
                 self.associates = pd.read_excel(self.database , sheet_name='Consultants')
             except Exception as e:
                 error_message = f"An error occurred while opening the database:\n{str(e)}"
@@ -446,16 +445,19 @@ class Model:
             self.__open_database()
             try:
                 active_assignments = self.assignments.loc[self.assignments['Status'] == "Active"]
-                sales_list = active_assignments[['ID','Name', 'Client','Location', "Cost Rate"]].sort_values('Location')
-                sales_list.rename(columns= {'ID':'Assignment ID'}, inplace=True)
-                sales_list.rename(columns= {'Cost Rate':'Purchase Days'}, inplace=True)
+                sales_list = active_assignments[['ID','Name', 'Client','Location', "Cost Rate"]]
+                sales_list = sales_list.rename(columns= {'ID':'Assignment ID', 'Cost Rate':'Purchase Days'})
                 sales_list['Purchase Days'] = sales_list['Purchase Days'].apply(lambda x: "Permanent" if x == 0 else "")
-                sales_list.reset_index(drop=True, inplace=True)
-                sales_list = pd.concat([self.sales, sales_list], axis=0)
+                sales_list['Invoice Number'] = np.nan
+                sales_list['Days'] = np.nan
+                sales_list['Fee Days'] = np.nan
+                sales_list['Purchase Order'] = np.nan
+                sales_list['Comments'] = np.nan
+                sales_list = sales_list[['Invoice Number','Assignment ID', 'Name', 'Client', 
+                                         'Days', 'Purchase Days','Fee Days','Purchase Order','Comments','Location']]
                 ire_sales_list = sales_list.loc[sales_list['Location']== 'Ireland'].drop(columns='Location')
                 bv_sales_list = sales_list.loc[sales_list['Location']== 'Netherlands'].drop(columns='Location')
                 uk_sales_list = sales_list.loc[sales_list['Location']== 'United Kingdom'].drop(columns='Location')
-
                 return ire_sales_list,  bv_sales_list, uk_sales_list
             except Exception as e:
                 error_message = f"An error occurred while creating sales lists:\n{str(e)}"
@@ -464,11 +466,13 @@ class Model:
         def export_sales_list(self):
             try:
                 ire, bv, uk = self.__extract_sales_list()
-                ire.to_excel(os.path.join(self.home_dir, 'CMIRE Sales List.xlsx'))
-                bv.to_excel(os.path.join(self.home_dir, 'CMBV Sales List.xlsx'))
-                uk.to_excel(os.path.join(self.home_dir, 'CMUK Sales List.xlsx')) 
-            except:
-                return
+                with pd.ExcelWriter(os.path.join(self.home_dir, 'Sales List.xlsx')) as writer:
+                    ire.to_excel(writer, sheet_name='Ireland', index=False)
+                    bv.to_excel(writer, sheet_name='Netherland', index=False)
+                    uk.to_excel(writer, sheet_name='UK', index=False)
+            except Exception as e:
+                print(f"An error occurred: {e}")
+
 
         
         def browse_sales_list(self):
