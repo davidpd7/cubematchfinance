@@ -105,14 +105,12 @@ class Model:
                 QMessageBox.critical(None, "Error", error_message)
 
         def split_pdf(self):
-
+            files = self.fileName[0]
+            self.split_pdf_files = []
+            folder_path = os.path.dirname(files)
+            output_dir = os.path.join(folder_path, 'Sales')
+            os.makedirs(output_dir, exist_ok=True)
             try:
-                files = self.fileName[0]
-                self.split_pdf_files = []
-                folder_path = os.path.dirname(files)
-                output_dir = os.path.join(folder_path, 'Sales')
-                os.makedirs(output_dir, exist_ok=True)
-            
                 with open(files, 'rb') as file:
                     pdf = PyPDF2.PdfReader(file)
                     total_pages = len(pdf.pages)
@@ -138,9 +136,10 @@ class Model:
                         with pdfplumber.open(old_path) as pdf:
                             page = pdf.pages[0].extract_tables()
                             new_name = self.__set_name_sales_invoices(page)
-                            new_path = os.path.join(folder_path, new_name)
-                            pdf.close()
-                            self.parent.rename(old_path, new_path)
+                            if new_name is not None:
+                                new_path = os.path.join(folder_path, new_name)
+                                pdf.close()
+                                self.parent.rename(old_path, new_path)
             except Exception as e:
                 error_message = f"An error occurred while renaming files:\n{str(e)}"
                 print(error_message)
